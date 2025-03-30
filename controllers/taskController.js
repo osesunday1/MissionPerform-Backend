@@ -78,3 +78,13 @@ export const deleteTask = async (req, res, next) => {
     return next(new HttpError(`Could not delete task: ${err.message}`, 500));
   }
 };
+
+// Clear all tasks
+export const clearAllTasks = async (req, res) => {
+  try {
+    await taskModel.deleteMany({});
+    res.status(200).json({ message: 'All tasks have been deleted successfully.' });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to delete all tasks', error: err.message });
+  }
+};
